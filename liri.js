@@ -52,7 +52,7 @@ var spotifyThis = function(userSearch){
      console.log('Song Name: '+ songs[i].name);
      console.log('Preview Song: ' + songs[i].preview_url)
      console.log('Album: ' + songs[i].album.name)
-     console.log('-'.repeat(process.stdout.columns)) + '\n\n';
+     console.log('='.repeat(process.stdout.columns)) + '\n\n';
  }
 
 });
@@ -65,16 +65,21 @@ var getMovie = function(userSearch){
 // Then run a request with axios to the OMDB API with the movie specified
 var queryUrl = "http://www.omdbapi.com/?t="+userSearch+"&y=&plot=short&apikey=trilogy";
 
+// Default empty or null search for Mr. Nobody
+if (userSearch === '' || userSearch === null || userSearch === undefined) {
+  userSearch = 'Mr. Nobody'
+}
+
 axios.get(queryUrl).then(
   function(response) {
-    console.log("Title:  "+ response.data.movie.Title);
+    console.log("Title:  "+ response.data.Title);
     console.log("Release Year: " + response.data.Year);
-    console.log("Rotten Tomatoes Rating: " + response.data.movie.Ratings[1].Value);
-    console.log("IMDB Rating:  " + response.data.movie.movie.imdbRating);
-    console.log("Country:  "+ response.data.movie.Country) ;
-    console.log("Language: " + response.data.movie.Language);
-    console.log("Plot:  "+ response.data.movie.imdbRating);
-    console.log("Actors:  "+ response.data.movie.Actors);
+    console.log("Rotten Tomatoes Rating: " + response.data.Ratings[1].Value);
+    console.log("IMDB Rating:  " + response.data.imdbRating);
+    console.log("Country:  "+ response.data.Country) ;
+    console.log("Language: " + response.data.Language);
+    console.log("Plot:  "+ response.data.imdbRating);
+    console.log("Actors:  "+ response.data.Actors);
     console.log('='.repeat(process.stdout.columns)) + '\n\n';
   });
 
@@ -96,7 +101,7 @@ axios.get(URL).then(function(response){
    var showTime = response.data[i].venue.datetime;
    showTime = moment(showTime).format("MM/DD/YYYY")
     console.log('Date:  ' + showTime)
-    console.log('-'.repeat(process.stdout.columns)) + '\n\n';
+    console.log('='.repeat(process.stdout.columns)) + '\n\n';
 
  
 
