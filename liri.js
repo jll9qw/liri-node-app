@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 var keys = require("./keys");
-
+var moment = require('moment');
 
 // Include the axios npm package (Don't forget to run "npm install axios" in this folder first!)
 var axios = require("axios");
@@ -56,7 +56,7 @@ var spotifyThis = function(userSearch){
  }
 
 });
-}
+};
 
 
 var getMovie = function(userSearch){
@@ -65,20 +65,47 @@ var getMovie = function(userSearch){
 // Then run a request with axios to the OMDB API with the movie specified
 var queryUrl = "http://www.omdbapi.com/?t="+userSearch+"&y=&plot=short&apikey=trilogy";
 
-
 axios.get(queryUrl).then(
   function(response) {
+    console.log("Title:  "+ response.data.movie.Title);
     console.log("Release Year: " + response.data.Year);
+    console.log("Rotten Tomatoes Rating: " + response.data.movie.Ratings[1].Value);
+    console.log("IMDB Rating:  " + response.data.movie.movie.imdbRating);
+    console.log("Country:  "+ response.data.movie.Country) ;
+    console.log("Language: " + response.data.movie.Language);
+    console.log("Plot:  "+ response.data.movie.imdbRating);
+    console.log("Actors:  "+ response.data.movie.Actors);
+    console.log('='.repeat(process.stdout.columns)) + '\n\n';
   });
-}
+
+
+};
 
 var getConcert = function(userSearch){
 
 var URL = "https://rest.bandsintown.com/artists/" + userSearch + "/events?app_id=codingbootcamp"
 axios.get(URL).then(function(response){
-console.log(response)
+
+ 
+  for (var i = 0; i < response.data.length; i++) {
+    console.log('Artist Name:  ' + response.data[0].lineup[0]);
+    console.log('Venue:  '+ response.data[i].venue.name);
+    console.log('City:  '+ response.data[i].venue.city);
+    console.log('Country:  '+ response.data[i].venue.country)
+
+   var showTime = response.data[i].venue.datetime;
+   showTime = moment(showTime).format("MM/DD/YYYY")
+    console.log('Date:  ' + showTime)
+    console.log('-'.repeat(process.stdout.columns)) + '\n\n';
+
+ 
+
+  }
+     
+
 });
 }
+
 
 
 // Switch case function 
@@ -96,13 +123,27 @@ var pick = function(caseData, functionData){
         default:
          console.log('LIRI does not know that');
   }
-}
+};
 var runThis = function(arg1, arg2){
   pick(arg1, arg2);
-}
+};
 
-runThis(caseData, userSearch)
-
-
+runThis(caseData, userSearch);
 
 
+// function readFile(){
+//   fs.readFile("random.txt", "utf8", function(error, data) {
+//       if (error) {
+//           return console.log(error);
+
+// }
+// var dataArr = data.split(',');
+// if (dataArr.length == 2){
+//   pick(dataArr[0], dataArr[1]);
+// }else if (dataArr.length == 1){
+//   pick(dataArr[0]);
+// }
+
+// });
+// }
+// readFile();
