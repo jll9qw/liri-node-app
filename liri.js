@@ -38,6 +38,8 @@ var artistName = function(artist){
 
 
 var spotifyThis = function(userSearch){
+
+  var userSearch = process.argv.slice(3)
  spotify.search({ type: 'track', query: userSearch }, function(err, data) {
   if (err) {
       console.log('Error occurred: ' + err);
@@ -136,19 +138,20 @@ var runThis = function(arg1, arg2){
 runThis(caseData, userSearch);
 
 
-// function readFile(){
-//   fs.readFile("random.txt", "utf8", function(error, data) {
-//       if (error) {
-//           return console.log(error);
+function readFile(){
+  fs.readFile("random.txt", "utf8", function(error, data) {
+      if (error) {
+          return console.log(error);
 
-// }
-// var dataArr = data.split(',');
-// if (dataArr.length == 2){
-//   pick(dataArr[0], dataArr[1]);
-// }else if (dataArr.length == 1){
-//   pick(dataArr[0]);
-// }
+}
+var dataArr = data.split(',');
+if (dataArr.length == 2){
+  pick(dataArr[0], dataArr[1]);
+}else if (dataArr.length == 1){
+  pick(dataArr[0]);
+}
 
-// });
-// }
-// readFile();
+});
+
+readFile();
+}
